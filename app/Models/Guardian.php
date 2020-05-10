@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+
+class Guardian extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'student_id', 'name', 'surname', 'email', 'password', 'access_code',
     ];
 
     /**
@@ -56,5 +56,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function student(){
+        return $this->belongsTo('App\Models\Student');
     }
 }
