@@ -80,4 +80,22 @@ class GuardianController extends Controller
 
         return response()->json($data, Response::HTTP_NO_CONTENT);
     }
+
+    public function edit($id){
+        $guardian = $this->guardianService->find($id);
+
+        if($guardian){
+            $guardian = new GuardianResource($guardian);
+        }
+
+        $data = [
+            'status' => true,
+            'data' => [
+                'guardian' => $guardian
+            ],
+            'err' => null
+        ];
+
+        return response()->json($data, Response::HTTP_OK);
+    }
 }

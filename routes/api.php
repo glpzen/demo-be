@@ -32,6 +32,7 @@ Route::group([
 
     Route::get('/guardians', [ 'as' => 'guardians.index', 'uses' => 'GuardianController@index']);
     Route::patch('/guardians/{id}', [ 'as' => 'guardians.update', 'uses' => 'GuardianController@update']);
+    Route::get('/guardians/{id}/edit', [ 'as' => 'guardians.edit', 'uses' => 'GuardianController@edit']);
 
     Route::get('/students', [ 'as' => 'students.index', 'uses' => 'StudentController@index']);
     Route::get('/students/{id}/guardians', [ 'as' => 'students.index', 'uses' => 'StudentController@getGuardian']);
