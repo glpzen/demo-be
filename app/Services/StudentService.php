@@ -31,4 +31,8 @@ class StudentService
     public function getStudentIdByAccessCode($accessCode){
         return $this->studentRepository->getStudentIdByAccessCode($accessCode);
     }
+
+    public function guardian($studentId){
+        return $this->studentRepository->guardian($studentId);
+    }
 }

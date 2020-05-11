@@ -9,6 +9,10 @@
 namespace App\Repositories\Guardian;
 
 interface GuardianRepositoryInterface{
+    public function find($id);
     public function all();
+    public function allWithStudents();
     public function create($payload);
+    public function update($payload, $id);
+
 }

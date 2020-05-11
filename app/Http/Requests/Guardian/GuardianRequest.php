@@ -30,11 +30,22 @@ class GuardianRequest extends FormRequest
                     return [
                         'name' => ['required', 'max:255'],
                         'surname' => ['required', 'max:255'],
-                        'email' => ['required', 'unique:guardians'],
+                        'email' => ['required', 'email', 'unique:guardians'],
                         'password' => ['required', 'max:255'],
                         'access_code' => ['required', 'exists:students,guardian_access_code', 'unique:guardians,access_code'],
                     ];
                 }
+                break;
+            case 'PATCH':
+                {
+                    return [
+                        'name' => ['required', 'max:255'],
+                        'surname' => ['required', 'max:255'],
+                        'email' => ['required', "unique:guardians,email,{$this->id}"],
+                        'password' => ['required', 'max:255'],
+                    ];
+                }
+                break;
             default:
                 break;
         }

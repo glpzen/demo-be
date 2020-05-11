@@ -16,28 +16,23 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group([
-
     'middleware' => 'api',
-    'prefix' => 'auth'
-
 ], function ($router) {
-    Route::post('register', [ 'as' => 'register', 'uses' => 'Auth\AuthController@register']);
-    Route::post('login', [ 'as' => 'login', 'uses' => 'Auth\AuthController@login']);
-});
-
-
-Route::group([
-    'middleware' => 'jwt.auth',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('logout', [ 'as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
-    Route::post('refresh', 'Auth\AuthController@refresh');
-    Route::get('me', 'Auth\AuthController@me');
+    Route::post('/auth/login', [ 'as' => 'login', 'uses' => 'Auth\AuthController@login']);
+    Route::post('/guardians', [ 'as' => 'guardians.store', 'uses' => 'GuardianController@store']);
 });
 
 Route::group([
-    'middleware' => 'jwt.auth',
-    'prefix' => 'guardians'
+    'middleware' => 'jwt.auth'
 ], function ($router) {
-    Route::get('/', 'GuardianController@index');
+
+    Route::post('/auth/logout', [ 'as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
+    Route::post('/auth/refresh', 'Auth\AuthController@refresh');
+    Route::get('/auth/me', 'Auth\AuthController@me');
+
+    Route::get('/guardians', [ 'as' => 'guardians.index', 'uses' => 'GuardianController@index']);
+    Route::patch('/guardians/{id}', [ 'as' => 'guardians.update', 'uses' => 'GuardianController@update']);
+
+    Route::get('/students', [ 'as' => 'students.index', 'uses' => 'StudentController@index']);
+    Route::get('/students/{id}/guardians', [ 'as' => 'students.index', 'uses' => 'StudentController@getGuardian']);
 });

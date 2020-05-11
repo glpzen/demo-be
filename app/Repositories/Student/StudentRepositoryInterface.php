@@ -12,4 +12,5 @@ interface StudentRepositoryInterface{
     public function all();
     public function create($payload);
     public function getStudentIdByAccessCode($accessCode);
+    public function guardian($studentId);
 }

@@ -2,30 +2,22 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Guardian\GuardianRequest;
-use App\Services\GuardianService;
-use App\Services\StudentService;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
-    private $guardianService;
-    private $studentService;
 
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct(GuardianService $guardianService, StudentService $studentService)
+    public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
-        $this->guardianService = $guardianService;
-        $this->studentService = $studentService;
     }
 
     /**
@@ -104,28 +96,5 @@ class AuthController extends Controller
         return Auth::guard();
     }
 
-    public function register(GuardianRequest $request){
-        $studentId = $this->studentService->getStudentIdByAccessCode($request->post('access_code'));
 
-        $guardian = $this->guardianService->create([
-            'student_id' => $studentId,
-            'name' => $request->post('name'),
-            'surname' => $request->post('surname'),
-            'email' => $request->post('email'),
-            'password' => Hash::make($request->post('password')),
-            'access_code' => $request->post('access_code'),
-        ]);
-
-        $data = [
-            'status' => true,
-            'code' => 200,
-            'data' => [
-                'Guardian' => $guardian
-            ],
-            'err' => null
-        ];
-
-
-        return response()->json($data);
-    }
 }
